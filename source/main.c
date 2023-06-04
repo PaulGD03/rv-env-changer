@@ -339,37 +339,34 @@ int    CreateFiles(void *buffer, u32 size)
     FILE *jap;
 
 
-    if (stat("sdmc:/plugin/0004000000086200", &st) == -1) 
+    if (stat("sdmc:/titles/000400300000BC02", &st) == -1) 
     {
-        mkdir("sdmc:/plugin/0004000000086200", 0700);
+        mkdir("sdmc:/titles/000400300000BC02", 0700);
     }
-    if (stat("sdmc:/plugin/0004000000086300", &st) == -1) 
+    if (stat("sdmc:/titles/000400300000BD02", &st) == -1) 
     {
-        mkdir("sdmc:/plugin/0004000000086300", 0700);
+        mkdir("sdmc:/titles/000400300000BD02", 0700);
     }
-    if (stat("sdmc:/plugin/0004000000086400", &st) == -1) 
+    if (stat("sdmc:/titles/000400300000BE02", &st) == -1) 
     {
-        mkdir("sdmc:/plugin/0004000000086400", 0700);
+        mkdir("sdmc:/titles/000400300000BE02", 0700);
     }
 
     // Delete any existing plugins in the USA, EUR or JAP directory
-    remove("sdmc:/plugin/0004000000086300/ACNL_Multi.plg");
-    remove("sdmc:/plugin/0004000000086200/ACNL_Multi.plg");
-    remove("sdmc:/plugin/0004000000086400/ACNL_Multi.plg");
-    remove("sdmc:/plugin/0004000000086300/ACNL_Multi_USA.plg");
-    remove("sdmc:/plugin/0004000000086200/ACNL_Multi_JAP.plg");
-    remove("sdmc:/plugin/0004000000086400/ACNL_Multi_EUR.plg");
+    remove("sdmc:/titles/000400300000BC02/code.ips");
+    remove("sdmc:/titles/000400300000BD02/code.ips");
+    remove("sdmc:/titles/000400300000BE02/code.ips");
 
     if (!buffer)
         return (-1);
 
-    usa = fopen("sdmc:/plugin/0004000000086300/ACNL_MULTI.plg", "w+");
+    usa = fopen("sdmc:/titles/000400300000BC02/code.ips", "w+");
     fwrite(buffer, 1, size, usa);
     fclose(usa);
-    eur = fopen("sdmc:/plugin/0004000000086400/ACNL_MULTI.plg", "w+");
+    eur = fopen("sdmc:/titles/000400300000BD02/code.ips", "w+");
     fwrite(buffer, 1, size, eur);
     fclose(eur);
-    jap = fopen("sdmc:/plugin/0004000000086200/ACNL_MULTI.plg", "w+");
+    jap = fopen("sdmc:/titles/000400300000BE02/code.ips", "w+");
     fwrite(buffer, 1, size, jap);
     fclose(jap);
 
@@ -383,13 +380,13 @@ int    DownloadPlugin(int version)
 {
     static const  char *urls[2] = 
     {
-        "https://github.com/RyDog199/ACNL-NTR-Cheats/blob/master/ACNL_MULTI.plg?raw=true",
-        "https://github.com/RyDog199/ACNL-NTR-Cheats/releases/download/v3.0B1/ACNL_MULTI.plg"
+        "https://github.com/PaulGD03/rv-env-changer/blob/master/web/rv2/code.ips?raw=true",
+        "https://github.com/PaulGD03/rv-env-changer/blob/master/web/rv3/code.ips?raw=true"
     };
     static const  char *downloadVersion[2] = 
     {
-        "Updating plugin to the last version...\n\n",
-        "Downloading 3.0 Beta...\n\n"
+        "Switching to rverse2...\n\n",
+        "Switching to rverse3...\n\n"
     };
 
     u8      *buffer = NULL;
@@ -518,7 +515,7 @@ int     downloadUpdate(void)
     jsmntok_t       tokens[128];
 
 
-    if (!http_download("https://api.github.com/repos/RyDog199/plugin-downloader/releases/latest", (u8 *)&json, &size))
+    if (!http_download("https://api.github.com/repos/PaulGD03/rv-env-changer/releases/latest", (u8 *)&json, &size))
     {
         jsmn_init(&jParser);
         r = jsmn_parse(&jParser, json, size, tokens, sizeof(tokens)/sizeof(tokens[0]));
@@ -590,9 +587,9 @@ int main()
 
     consoleInit(GFX_TOP,NULL);
 
-    printf("--- ACNL Multi NTR Plugin Downloader %s ---\n\n", g_version);
-    printf("Press A to download the latest version \n");
-    printf("Press B to download 3.0 beta (for people without\nthe Amiibo update) \n");
+    printf("--- Rverse Environment Changer %s ---\n\n", g_version);
+    printf("Press A to download rverse2 \n");
+    printf("Press B to download rverse3 beta \n");
     printf("Press Y to check for updates.\n");
     printf("Press Start to exit.\n\n");
     //check for an update
